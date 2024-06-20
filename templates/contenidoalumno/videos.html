@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <h5>Videos Clases del Marte 05 Junio 2024</h5>
+    {% for vid in videos %}
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <video width="320" height="240" controls>
+                        <source src="{{ vid.get_video_resumen_url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <h5>Resumen AI</h5>
+                    <p>{{vid.texto}}</p>
+                    
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+{% endblock content %}
