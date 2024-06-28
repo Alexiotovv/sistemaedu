@@ -3,8 +3,12 @@
 <form action="{% url 'video.store' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
   <label for="">Nombre</label>
   <input type="text" class="form-control" name="nombre">
+  <br>
+  <label for="">Descripcion</label>
+  <input type="text" class="form-control" name="descripcion">
+  <br>
   <label for="">Video</label>
-  <input type="file" class="form-control" name="video">
+  <textarea type="file" class="form-control" name="video"></textarea>
   
   <br>
   <button class="btn btn-primary btn-sm">Guardar</button>

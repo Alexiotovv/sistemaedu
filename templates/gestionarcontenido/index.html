@@ -37,7 +37,15 @@
                                                 </video>
                                             {% endif %}
                                         </td>
-                                        <td>{{vid.audio}}</td>
+                                        
+                                        <td>
+                                            {% if vid.get_audio_url %}
+                                                <audio controls>
+                                                    <source src="{{vid.get_audio_url}}" type="audio/wav">
+                                                    Tu navegador no soporta la reproducción de audio.
+                                                </audio>
+                                            {% endif %}
+                                        </td>
                                         <td>{{vid.texto}}</td>
 
                                     </tr>
@@ -45,7 +53,7 @@
                             </tbody>
                         </table>
 
-                <div class="col-md-12">
+                {% comment %} <div class="col-md-12">
                     <h4>Gestionar Contenido de Resúmenes</h4>
                     <table class="table table responsive table-stripped">
                         <thead>
@@ -73,7 +81,6 @@
                         </tbody>
                     </table>
                 </div>
-
                 <div class="col-md-12">
                     <h4>Gestionar Contenido de Documentos</h4>
                     <table class="table table responsive table-stripped">
@@ -103,10 +110,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                </div>
-
-
-
+                </div> {% endcomment %}
             </div>
         </div>
     </div>

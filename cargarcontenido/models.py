@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
+
 import os
 
 class Documento(models.Model):
@@ -24,11 +26,13 @@ class Resumen(models.Model):
 
 class Video(models.Model):
     nombre = models.CharField(max_length=255)
+    descripcion = models.TextField(default='-')
     video = models.CharField(max_length=255)
     video_resumen=models.CharField(max_length=255)
     audio = models.CharField(max_length=255,default='-')
     texto = models.TextField(default='-')
-    
+    reproducciones = models.PositiveIntegerField(default=0)
+
     def __str__(self):
         self.nombre
 
@@ -37,3 +41,10 @@ class Video(models.Model):
     
     def get_video_resumen_url(self):
         return os.path.join(settings.MEDIA_URL,'resumenes', self.video_resumen)
+    def get_audio_url(self):
+        return os.path.join(settings.MEDIA_URL, self.audio)
+    
+class VideoReproduccion(models.Model):
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    fecha_reproduccion = models.DateTimeField(auto_now_add=True)

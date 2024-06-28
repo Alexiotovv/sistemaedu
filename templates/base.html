@@ -80,8 +80,6 @@
 								</li>
 								<li> <a href="{% url 'appestadistica.index' %}"><i class="bx bx-right-arrow-alt"></i>Seguimiento Estadístico</a>
 								</li>
-								<li> <a href=""><i class="bx bx-right-arrow-alt"></i>gestionar Generación Automática</a>
-								</li>
 							{% endif %}
 						{% endfor %}
 						
@@ -89,10 +87,10 @@
 	                		{% if group.name == 'Alumno'  %}
 								<li> <a href="{% url 'appcontenidovideos' %}"><i class="bx bx-right-arrow-alt"></i>Contenido Videos</a>
 								</li>
-								<li> <a href="{% url 'appcontenidodocumentos' %}"><i class="bx bx-right-arrow-alt"></i>Contenido Documentos</a>
+								{% comment %} <li> <a href="{% url 'appcontenidodocumentos' %}"><i class="bx bx-right-arrow-alt"></i>Contenido Documentos</a>
 								</li>
 								<li> <a href="{% url 'appcontenidotextos' %}"><i class="bx bx-right-arrow-alt"></i>Contenido Textos</a>
-								</li>
+								</li> {% endcomment %}
 								
 							{% endif %}
 						{% endfor %}

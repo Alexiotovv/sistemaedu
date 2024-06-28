@@ -6,10 +6,12 @@
         <div class="col-sm-4">
             <div class="card">
                 <div class="card-body">
-                    <video width="320" height="240" controls>
+                    <video id="{{ vid.id }}" width="320" height="240" controls>
                         <source src="{{ vid.get_video_resumen_url }}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
+                    <h5>Descripción</h5>
+                    <p>{{vid.descripcion}}</p>
                     <h5>Resumen AI</h5>
                     <p>{{vid.texto}}</p>
                     
@@ -20,3 +22,7 @@
 
 </div>
 {% endblock content %}
+
+{% block js %}
+    
+{% endblock js %}

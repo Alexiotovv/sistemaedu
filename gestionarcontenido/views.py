@@ -10,6 +10,7 @@ from .models import TextSummarizer
 
 from docx import Document as DocxDocument
 import speech_recognition as sr
+import random
 
 
 def gestionarcontenido_index(request):
@@ -63,10 +64,23 @@ def procesar_video(request,id):
 
     #carga el video al VideoFileClip
     video_clip = VideoFileClip(input_video_path)
-    #definimos los segmentos que cortaremos
-    cuts=[(0,10),(20,30),(40,60)]
+    
+    # Obtiene la duración del video
+    video_duration = video_clip.duration
+    half_duration = video_duration / 2
+
+    # Genera segmentos  que sumen al menos la mitad de la duración del video original
+    total_segment_duration = 0
+    segments = []
+    
+    while total_segment_duration < half_duration:
+        cuts = sorted(random.sample(range(int(video_duration)), 4))
+        segments = [(cuts[i], cuts[i+1]) for i in range(len(cuts)-1)]
+        total_segment_duration = sum(end - start for start, end in segments)
+
     #cortamos los segmentos
-    clips = [video_clip.subclip(start, end) for start, end in cuts]
+    clips = [video_clip.subclip(start, end) for start, end in segments]
+
     #unimos los segmentos cortados en un solo video
     final_clip = concatenate_videoclips(clips)
     #guardamos el video resumen
@@ -104,6 +118,12 @@ def extraer_audio_y_convertir_a_texto(input_video_path):
         with sr.AudioFile(output_audio_path) as source:
             audio_data = recognizer.record(source)
             audio_text = recognizer.recognize_google(audio_data,language='es-ES')
+    # except Exception as e:
+    #     audio_text = f"Error al convertir el audio a texto: {str(e)}"
+    except sr.RequestError as e:
+        audio_text = f"Error al conectar con el servicio de reconocimiento de voz: {str(e)}"
+    except sr.UnknownValueError:
+        audio_text = "No se pudo entender el audio."
     except Exception as e:
         audio_text = f"Error al convertir el audio a texto: {str(e)}"
     

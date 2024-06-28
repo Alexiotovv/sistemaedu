@@ -27,7 +27,7 @@ def video_create(request):
 def video_store(request):
     nombre=request.POST.get('nombre')
     video=request.FILES.get('video')
-    
+    descripcion =request.POST.get('descripcion')
     if request.method=='POST' and request.FILES['video']:
         myfile=request.FILES['video']
 
@@ -44,6 +44,7 @@ def video_store(request):
         
         obj=Video()
         obj.nombre=nombre
+        obj.descripcion=descripcion
         obj.video=unique_filename
         obj.save()
         return redirect('cargarcontenido.index')
@@ -126,3 +127,4 @@ def documento_update(request):
 
     return redirect('cargarcontenido.index')
     
+
