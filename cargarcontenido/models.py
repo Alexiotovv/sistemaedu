@@ -31,6 +31,7 @@ class Video(models.Model):
     video_resumen=models.CharField(max_length=255)
     audio = models.CharField(max_length=255,default='-')
     texto = models.TextField(default='-')
+    texto_resumen = models.TextField(default='-')
     reproducciones = models.PositiveIntegerField(default=0)
 
     def __str__(self):

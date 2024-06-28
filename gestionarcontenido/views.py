@@ -12,6 +12,8 @@ from docx import Document as DocxDocument
 import speech_recognition as sr
 import random
 
+from transformers import pipeline
+
 
 def gestionarcontenido_index(request):
     videos=Video.objects.all()
@@ -88,10 +90,25 @@ def procesar_video(request,id):
 
     audio, texto=extraer_audio_y_convertir_a_texto(input_video_path)
 
+    # Definir el modelo de resumen específico para español
+    summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+    # Dividir el texto en segmentos si es muy largo
+    max_tokens = 1024  # Este es un ejemplo, ajusta según el límite del modelo
+    segments = [texto[i:i+max_tokens] for i in range(0, len(texto), max_tokens)]
+
+    # Generar resúmenes para cada segmento
+    summaries = [summarizer(segment, max_length=90, min_length=5, do_sample=False) for segment in segments]
+
+    # Unir los resúmenes
+    full_summary = " ".join([summary[0]['summary_text'] for summary in summaries])
+
+    #summary=summarizer(texto,max_length=100,min_length=10,do_sample=False)
+
     #actualizamos en la tabla el nombre del archivo
     video.video_resumen = unique_filename
     video.audio=audio
     video.texto=texto
+    video.texto_resumen=full_summary
     video.save()
 
     return JsonResponse({'message':'procesamiento exitoso'})
@@ -114,6 +131,9 @@ def extraer_audio_y_convertir_a_texto(input_video_path):
     file_extension = os.path.splitext(output_audio_path)[1]
     nombre_audio=file_name+file_extension
     
+    
+
+
     try:
         with sr.AudioFile(output_audio_path) as source:
             audio_data = recognizer.record(source)
