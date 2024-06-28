@@ -5,30 +5,64 @@
     <div class="row">
         <h5>Visualizaciones Vídeos</h5>
         <div class="col-md-4">
-            <div id="chart1"> </div>
+            <div id="chartDatosReproducciones"> </div>
         </div>
     </div>
 
 {% endblock content %}
 
 {% block js %}
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="/static/apexcharts/apexcharts.js"></script>
     <script>
-        var options = {
-            chart: {
-              type: 'line'
-            },
-            series: [{
-              name: 'sales',
-              data: [30,40,35,50,49,60,70,91,125]
-            }],
-            xaxis: {
-              categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
-            }
-          }
-          
-          var chart = new ApexCharts(document.querySelector("#chart1"), options);
-          
-          chart.render();
+        
+      $(document).ready(function() {
+        datos_reproducciones();        
+    });
+
+        function datos_reproducciones(){
+            $.ajax({
+                type: "GET",
+                url: "/datos/reproducciones/",
+                dataType: "json",
+                success: function (data) {
+                  grafDatosReproducciones(data)
+                }
+            });
+        };
+
+
+        function grafDatosReproducciones(data) { 
+      
+            const series_array = [];
+            const labels_array = [];
+            
+            data.reproducciones.forEach(item => {
+              labels_array.push(item.nombre); 
+              series_array.push(item.reproducciones)
+            });
+  
+              var options = {
+                series: series_array,
+                chart: {
+                width: 380,
+                type: 'pie',
+              },
+              labels: labels_array,
+              responsive: [{
+                breakpoint: 480,
+                options: {
+                  chart: {
+                    width: 200
+                  },
+                  legend: {
+                    position: 'bottom'
+                  }
+                }
+              }]
+              };
+  
+              var chart = new ApexCharts(document.querySelector("#chartDatosReproducciones"), options);
+              chart.render();
+        }
     </script>
 {% endblock js %}

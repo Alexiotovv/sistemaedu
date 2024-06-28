@@ -16,6 +16,7 @@
 	<link href="/static/assets/css/bootstrap-extended.css" rel="stylesheet">
 	<link href="/static/assets/css/app.css" rel="stylesheet">
 	<link href="/static/assets/css/icons.css" rel="stylesheet">
+	<script src="/static/assets/js/jquery-3.7.1.min.js"></script>
     {% block css %}
       
     {% endblock css %}
@@ -69,8 +70,7 @@
 								</li>
 								<li> <a href="{% url 'appestadistica.index' %}"><i class="bx bx-right-arrow-alt"></i>Seguimiento Estadístico</a>
 								</li>
-								<li> <a href="#"><i class="bx bx-right-arrow-alt"></i>gestionar Generación Automática</a>
-								</li>
+								
 							{% endif %}
 						{% endfor %}
 						
@@ -463,7 +463,7 @@
 	<!-- Bootstrap JS -->
 	<script src="/static/assets/js/bootstrap.bundle.min.js"></script>
 	<!--plugins-->
-	<script src="/static/assets/js/jquery.min.js"></script>
+	
 	<script src="/static/assets/plugins/simplebar/js/simplebar.min.js"></script>
 	<script src="/static/assets/plugins/metismenu/js/metisMenu.min.js"></script>
 	<script src="/static/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>

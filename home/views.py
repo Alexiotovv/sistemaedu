@@ -9,3 +9,4 @@ def index(request):
 def salir(request):
     logout(request)
     return redirect('/')
+
