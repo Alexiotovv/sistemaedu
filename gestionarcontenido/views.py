@@ -92,8 +92,10 @@ def procesar_video(request,id):
 
     # Definir el modelo de resumen específico para español
     summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+
     # Dividir el texto en segmentos si es muy largo
     max_tokens = 1024  # Este es un ejemplo, ajusta según el límite del modelo
+    
     segments = [texto[i:i+max_tokens] for i in range(0, len(texto), max_tokens)]
 
     # Generar resúmenes para cada segmento

@@ -3,7 +3,8 @@ from django.contrib.auth import authenticate,login
 from usuario.forms import *
 from django.http import JsonResponse
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 def RegistroUsuario(request,user_id=None):
     if user_id:
@@ -72,7 +73,20 @@ def CambiarPassword(request):
         user.set_password=password
         user.save()
     return redirect ('appListarUsuario')
+
+
+@login_required
+@require_POST
+def EliminarUsuario(request):
+    id_usuario = request.POST.get('id_usuario_eliminar')
+    user = get_object_or_404(User, id=id_usuario)
+    # Nos asegúramos de que el usuario no pueda eliminarse a sí mismo
+    if request.user == user:
+        # Podrías mostrar un mensaje de error aquí
+        return redirect('appListarUsuario')
     
+    user.delete()
+    return redirect('appListarUsuario')
 
 def ListarUsuarios(request):
     usuarios = User.objects.all()

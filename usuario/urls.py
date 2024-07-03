@@ -6,6 +6,7 @@ urlpatterns = [
     path('register/',RegistroUsuario, name='register'),
     path('listar/usuario/',ListarUsuarios, name='appListarUsuario'), 
     path('nuevo/usuario/',RegistroUsuario, name='appNuevoUsuario'),
+    path('eliminar/usuario/',EliminarUsuario, name='appEliminarUsuario'),
     path('nuevo/usuario/externo',RegistroUsuarioExterno, name='appNuevoUsuarioExterno'),
     path('actualizar/usuario/<user_id>/', RegistroUsuario, name='appEditarUsuario'),
     path('cambiar/password/',CambiarPassword, name='appCambiarPassword'),

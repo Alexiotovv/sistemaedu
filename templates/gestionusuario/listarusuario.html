@@ -35,7 +35,7 @@
 					  <td>{{ usu.is_staff }}</td>
 			      	<td>					
 					
-						<a href="" class="btn btn-danger btn-sm">Eliminar</a>
+						<a href="" class="btn btn-danger btn-sm btnEliminarUsuario">Eliminar</a>
 						<a href="{% url 'appEditarUsuario' user_id=usu.id %}" class="btn btn-warning btn-sm">Editar</a>
 						<a href="" class="btn btn-info btn-sm btnCambiarPassword" >Cambiar Password</a>
 			      	</td>
@@ -73,6 +73,29 @@
 		</div>
 	</div>
 
+	<div class="modal fade" id="modalEliminarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Eliminar Usurio</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form action="{% url 'appEliminarUsuario' %}" method="POST">{% csrf_token %}
+						<input type="text" name="id_usuario_eliminar" id="id_usuario_eliminar" hidden>
+						<label for="">Confirme por favor para poder eliminar Usuario</label>
+
+						<br>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-danger btn-sm">Sí, Eliminar</button>
+						<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Salir</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 {% endblock content %}
 
 {% block js %}
@@ -85,5 +108,14 @@
 			$("#modalCambiarPassword").modal('show');
 		});
 		
+		$(document).on("click",".btnEliminarUsuario",function(e){
+			e.preventDefault()
+			fila=$(this).closest("tr");
+			id=(fila).find('td:eq(0)').text();
+			$("#id_usuario_eliminar").val(id);
+			$("#modalEliminarUsuario").modal('show');
+		});
+		
+
 	</script>
 {% endblock js %}
