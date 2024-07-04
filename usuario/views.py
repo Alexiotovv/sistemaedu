@@ -69,8 +69,10 @@ def CambiarPassword(request):
     if request.method == 'POST':
         id_usuario=request.POST.get('id_usuario')
         password=request.POST.get('password')
+        print(id_usuario)
+        print(password)
         user = get_object_or_404(User, id=id_usuario)
-        user.set_password=password
+        user.set_password(password)
         user.save()
     return redirect ('appListarUsuario')
 
