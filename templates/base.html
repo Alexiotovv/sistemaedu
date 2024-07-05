@@ -40,19 +40,7 @@
 			</div>
 			<!--navigation-->
 			<ul class="metismenu" id="menu">
-				<!-- <li>
-					<a href="javascript:;" class="has-arrow">
-						<div class="parent-icon"><i class='bx bx-home-circle'></i>
-						</div>
-						<div class="menu-title">Dashboard</div>
-					</a>
-					<ul>
-						<li> <a href="index.html"><i class="bx bx-right-arrow-alt"></i>eCommerce</a>
-						</li>
-						<li> <a href="index2.html"><i class="bx bx-right-arrow-alt"></i>Analytics</a>
-						</li>
-					</ul>
-				</li> -->
+
 				<li>
 					<a href="javascript:;" class="has-arrow">
 						<div class="parent-icon"><i class="bx bx-category"></i>
@@ -75,23 +63,13 @@
 						{% endfor %}
 						
 						{% for group in user.groups.all %}
-	                		{% if group.name == 'Profesor'%}
-								<li> <a href="{% url 'appestadistica.index' %}"><i class="bx bx-right-arrow-alt"></i>Seguimiento Estadístico</a>
+	                		{% if group.name == 'Estudiante'  %}
+								<li> <a href="{% url 'cargarcontenido.index' %}"><i class="bx bx-right-arrow-alt"></i>subir Videos</a>
 								</li>
 								<li> <a href="{% url 'appcontenidovideos' %}"><i class="bx bx-right-arrow-alt"></i>Contenido Videos</a>
 								</li>
-							{% endif %}
-						{% endfor %}
-						
-						{% for group in user.groups.all %}
-	                		{% if group.name == 'Alumno'  %}
-								<li> <a href="{% url 'appcontenidovideos' %}"><i class="bx bx-right-arrow-alt"></i>Contenido Videos</a>
+								<li> <a href="{% url 'gestionarcontenido.index' %}"><i class="bx bx-right-arrow-alt"></i>Gestionar Generación</a>
 								</li>
-								{% comment %} <li> <a href="{% url 'appcontenidodocumentos' %}"><i class="bx bx-right-arrow-alt"></i>Contenido Documentos</a>
-								</li>
-								<li> <a href="{% url 'appcontenidotextos' %}"><i class="bx bx-right-arrow-alt"></i>Contenido Textos</a>
-								</li> {% endcomment %}
-								
 							{% endif %}
 						{% endfor %}
 					</ul>

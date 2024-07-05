@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from cargarcontenido.models import *
 from django.conf import settings
 import os
@@ -26,7 +26,9 @@ def video_create(request):
 
 def video_store(request):
     nombre=request.POST.get('nombre')
-    video=request.FILES.get('video')
+    genera_alumno=request.POST.get('genera_alumno')
+    #video=request.FILES.get('video')
+
     descripcion =request.POST.get('descripcion')
     if request.method=='POST' and request.FILES['video']:
         myfile=request.FILES['video']
@@ -46,8 +48,48 @@ def video_store(request):
         obj.nombre=nombre
         obj.descripcion=descripcion
         obj.video=unique_filename
+        obj.genera_alumno=genera_alumno
         obj.save()
         return redirect('cargarcontenido.index')
+
+def video_edit(request,id_video):
+    video = Video.objects.get(id=id_video)
+    return render(request,'cargarcontenido/video_edit.html',{'video':video})
+
+def video_update(request):
+    id_video=request.POST.get('id_video')
+    nombre=request.POST.get('nombre')
+    video=request.FILES.get('video')
+    descripcion =request.POST.get('descripcion')
+    if request.method=='POST':
+        obj=Video.objects.get(id=id_video)
+
+        if video:
+            myfile=request.FILES['video']
+
+            now = datetime.now()
+            datetime_str = now.strftime("%Y%m%d%H%M%S")
+            original_filename = myfile.name
+            filename_pre=original_filename.split('.')[0]
+            extension = original_filename.split('.')[-1]
+            unique_filename = filename_pre+"_"+datetime_str+"."+extension
+
+            fs=FileSystemStorage()
+            filename=fs.save(unique_filename,myfile)
+            uploaded_file_url=fs.url(filename)#la url del archivo cargado
+            
+            obj.video=unique_filename
+        
+        obj.nombre=nombre
+        obj.descripcion=descripcion
+        obj.save()
+        return redirect('cargarcontenido.index')
+
+def video_delete(request,id_video):
+    video = Video.objects.get(id=id_video)
+    video.delete()
+    return redirect('cargarcontenido.index') 
+    
 
 def resumen_store(request):
     nombre=request.POST.get('nombre')

@@ -29,7 +29,23 @@
                                                 Your browser does not support the video tag.
                                             </video>
                                         </td>
-                                        <td><button class="btn btn-primary btn-sm" type="button" onclick="btnProcesar('{{vid.id}}')">Procesar</button></td>
+                                        
+                                        {% for group in user.groups.all %}
+	                		                {% if group.name == 'Admin' %}
+                                                <td><button class="btn btn-primary btn-sm" type="button" onclick="btnProcesar('{{vid.id}}')">Procesar</button></td>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% for group in user.groups.all %}
+	                		                {% if group.name == 'Estudiante' %}
+                                                {% if vid.genera_alumno %}
+                                                    <td><button class="btn btn-primary btn-sm" type="button" onclick="btnProcesar('{{vid.id}}')">Procesar</button></td>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        
+                                        
+            
                                         <td>
                                             {% if  vid.get_video_resumen_url %}
                                                 <video width="320" height="240" controls>

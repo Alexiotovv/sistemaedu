@@ -17,6 +17,9 @@ urlpatterns = [
 
     path("cargarcontenido/video/create", (video_create), name="video.create"),
     path("cargarcontenido/video/store", (video_store), name="video.store"),
+    path("cargarcontenido/video/update", (video_update), name="video.update"),
+    path("cargarcontenido/video/edit/<id_video>", (video_edit), name="video.edit"),
+    path("cargarcontenido/video/delete/<id_video>", (video_delete), name="video.delete"),
 
 ]
 

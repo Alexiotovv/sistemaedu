@@ -33,7 +33,7 @@ class Video(models.Model):
     texto = models.TextField(default='-')
     texto_resumen = models.TextField(default='-')
     reproducciones = models.PositiveIntegerField(default=0)
-
+    genera_alumno=models.BooleanField(default=False)
     def __str__(self):
         self.nombre
 
