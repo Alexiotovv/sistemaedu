@@ -4,9 +4,9 @@ from .views import *
 from django.contrib.auth.decorators import login_required
 urlpatterns = [
     #path('', login_required(index),name='home'),
-    path('', public_home,name='public_home'),
-    path('home', home,name='home'),
-    path("login/", login, name="login"),
+    path('public_home', public_home,name='public_home'),
+    path('home', login_required(home),name='home'),
+    path("login", login, name="login"),
     path("login_estudiante/", login_estudiante, name="login_estudiante"),
     path('salir/', salir,name='salir')
 ]

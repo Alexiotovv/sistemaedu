@@ -19,9 +19,12 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            return redirect('home')  
+            print("hace login")        
+            return redirect('home')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')
+
+    #return redirect('home')
     return render(request, 'registration/login.html')
 
 def login_estudiante(request):
@@ -34,9 +37,10 @@ def login_estudiante(request):
             return redirect('home')  
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')
-    return redirect('public_home')
+    #return redirect('home')
+    return render(request,'registration/login_estudiante.html')
 
 def salir(request):
     logout(request)
-    return redirect('/')
+    return redirect('login')
 
