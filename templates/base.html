@@ -56,8 +56,8 @@
 								</li>
 								<li> <a href="{% url 'appListarUsuario' %}"><i class="bx bx-right-arrow-alt"></i>Gestion de Usuarios</a>
 								</li>
-								<li> <a href="{% url 'appestadistica.index' %}"><i class="bx bx-right-arrow-alt"></i>Seguimiento Estadístico</a>
-								</li>
+								{% comment %} <li> <a href="{% url 'appestadistica.index' %}"><i class="bx bx-right-arrow-alt"></i>Seguimiento Estadístico</a>
+								</li> {% endcomment %}
 								
 							{% endif %}
 						{% endfor %}
