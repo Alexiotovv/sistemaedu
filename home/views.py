@@ -38,5 +38,5 @@ def login_estudiante(request):
 
 def salir(request):
     logout(request)
-    return redirect('/public_home')
+    return redirect('/')
 
