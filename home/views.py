@@ -19,7 +19,7 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            print("hace login")        
+            print("credenciales correctas")        
             return redirect('home')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')

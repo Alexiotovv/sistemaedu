@@ -40,6 +40,8 @@
 	                		                {% if group.name == 'Estudiante' %}
                                                 {% if vid.genera_alumno %}
                                                     <td><button class="btn btn-primary btn-sm" type="button" onclick="btnProcesar('{{vid.id}}')">Procesar</button></td>
+                                                {% else %}
+                                                    <td>N/A</td>
                                                 {% endif %}
                                             {% endif %}
                                         {% endfor %}
