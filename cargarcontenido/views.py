@@ -61,6 +61,7 @@ def video_update(request):
     nombre=request.POST.get('nombre')
     video=request.FILES.get('video')
     descripcion =request.POST.get('descripcion')
+    genera_alumno=request.POST.get('genera_alumno')
     if request.method=='POST':
         obj=Video.objects.get(id=id_video)
 
@@ -82,6 +83,7 @@ def video_update(request):
         
         obj.nombre=nombre
         obj.descripcion=descripcion
+        obj.genera_alumno=genera_alumno
         obj.save()
         return redirect('cargarcontenido.index')
 
