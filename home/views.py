@@ -16,15 +16,16 @@ def login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+        print(f"Intento de inicio de sesión: {username}")  # Depuración
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
             print("credenciales correctas")        
             return redirect('home')
         else:
+            print("Usuario o contraseña incorrectos.")  # Depuración
             messages.error(request, 'Usuario o contraseña incorrectos.')
-
-    #return redirect('home')
+            return redirect('login')  # Agregar redirección en caso de error
     return render(request, 'registration/login.html')
 
 def login_estudiante(request):

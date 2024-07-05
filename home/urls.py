@@ -6,7 +6,7 @@ urlpatterns = [
     #path('', login_required(index),name='home'),
     path('public_home', public_home,name='public_home'),
     path('home', login_required(home),name='home'),
-    path("login", login, name="login"),
+    path('login', login, name='login'),
     path("login_estudiante/", login_estudiante, name="login_estudiante"),
     path('salir/', salir,name='salir')
 ]

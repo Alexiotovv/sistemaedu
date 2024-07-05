@@ -96,10 +96,12 @@
                                     {% endif %}
                                     
                                 </td>
-                                <td><a href="{% url 'video.edit' vid.id %}" class="btn btn-warning btn-sm">Editar</a></td>
                                 {% for group in user.groups.all %}
-	                		        {% if group.name == 'Admin' %}
-                                        <td><a href="{% url 'video.delete' vid.id %}" class="btn btn-danger btn-sm">Eliminar</a></td>
+                                {% if group.name == 'Admin' %}
+                                        <td>
+                                            <a href="{% url 'video.edit' vid.id %}" class="btn btn-warning btn-sm">Editar</a>
+                                            <a href="{% url 'video.delete' vid.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                                        </td>
                                     {% endif %}
                                 {% endfor %}
                             </tr>
