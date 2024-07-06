@@ -55,3 +55,7 @@ def salir(request):
     logout(request)
     return redirect('login')
 
+def salir_estudiante(request):
+    logout(request)
+    return redirect('login_estudiante')
+
