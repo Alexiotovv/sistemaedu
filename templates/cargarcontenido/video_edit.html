@@ -9,16 +9,23 @@
   <label for="">Descripcion</label>
   <textarea type="text" class="form-control" name="descripcion">{{video.descripcion}}</textarea>
   <br>
-  <label for="">Gestiona el Usuario?</label>
-  <select name="genera_alumno" id="" class="form form-select">
-    {% if video.genera_alumno %}
-      <option value="1" selected>Si</option>
-      <option value="0">No</option>
-    {% else %}
-      <option value="0" selected>No</option>
-      <option value="1">Si</option>
+
+  {% for group in user.groups.all %}
+    {% if group.name == 'Admin' %}
+    
+      <label for="">Gestiona el Usuario?</label>
+      <select name="genera_alumno" id="" class="form form-select">
+        {% if video.genera_alumno %}
+          <option value="1" selected>Si</option>
+          <option value="0">No</option>
+        {% else %}
+          <option value="0" selected>No</option>
+          <option value="1">Si</option>
+        {% endif %}
+      </select>
+      
     {% endif %}
-  </select>
+  {% endfor %}
 
   <br>
   <label for="">Video</label>

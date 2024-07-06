@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 
 def public_home(request):
@@ -30,16 +31,25 @@ def login(request):
 
 def login_estudiante(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
+        
+        try:
+            # Busca al usuario por el correo electrónico
+            
+            user = User.objects.get(email=email)
+            # Autentica usando el nombre de usuario del usuario encontrado
+            user = authenticate(request, username=user.username, password=password)
+        except User.DoesNotExist:
+            user = None
+
         if user is not None:
             auth_login(request, user)
-            return redirect('home')  
+            return redirect('home')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos.')
-    #return redirect('home')
-    return render(request,'registration/login_estudiante.html')
+            
+    return render(request, 'registration/login_estudiante.html')
 
 def salir(request):
     logout(request)

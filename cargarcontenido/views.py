@@ -5,6 +5,8 @@ import os
 from django.core.files.storage import FileSystemStorage
 from .forms import VideoForm
 from datetime import datetime
+from django.contrib.auth.models import User,Group
+from django.contrib.auth import authenticate, login as auth_login
 
 
 def index(request):
@@ -25,32 +27,41 @@ def video_create(request):
     return render(request,'cargarcontenido/video_create.html')
 
 def video_store(request):
-    nombre=request.POST.get('nombre')
-    genera_alumno=request.POST.get('genera_alumno')
-    #video=request.FILES.get('video')
-
-    descripcion =request.POST.get('descripcion')
-    if request.method=='POST' and request.FILES['video']:
-        myfile=request.FILES['video']
+    if request.method == 'POST' and request.FILES.get('video'):
+        nombre = request.POST.get('nombre')
+        genera_alumno = request.POST.get('genera_alumno')
+        descripcion = request.POST.get('descripcion')
+        myfile = request.FILES['video']
 
         now = datetime.now()
         datetime_str = now.strftime("%Y%m%d%H%M%S")
         original_filename = myfile.name
-        filename_pre=original_filename.split('.')[0]
+        filename_pre = original_filename.split('.')[0]
         extension = original_filename.split('.')[-1]
-        unique_filename = filename_pre+"_"+datetime_str+"."+extension
+        unique_filename = f"{filename_pre}_{datetime_str}.{extension}"
 
-        fs=FileSystemStorage()
-        filename=fs.save(unique_filename,myfile)
-        uploaded_file_url=fs.url(filename)#la url del archivo cargado
+        fs = FileSystemStorage()
+        filename = fs.save(unique_filename, myfile)
+        uploaded_file_url = fs.url(filename)
+
+        obj = Video()
+        obj.nombre = nombre
+        obj.descripcion = descripcion
+        obj.video = unique_filename
         
-        obj=Video()
-        obj.nombre=nombre
-        obj.descripcion=descripcion
-        obj.video=unique_filename
-        obj.genera_alumno=genera_alumno
+        user = request.user  # Utiliza el usuario autenticado
+
+        # Verifica la pertenencia a los grupos
+        if user.groups.filter(name='Admin').exists():
+            obj.genera_alumno = genera_alumno
+        else:
+            obj.genera_alumno = False
+
         obj.save()
         return redirect('cargarcontenido.index')
+    
+    # Agregar lógica para manejar solicitudes GET o casos donde no se suba un archivo
+    return render(request, 'template_name.html')  # R
 
 def video_edit(request,id_video):
     video = Video.objects.get(id=id_video)
@@ -83,7 +94,16 @@ def video_update(request):
         
         obj.nombre=nombre
         obj.descripcion=descripcion
-        obj.genera_alumno=genera_alumno
+
+        user = request.user  # Utiliza el usuario autenticado
+
+        # Verifica la pertenencia a los grupos
+        if user.groups.filter(name='Admin').exists():
+            obj.genera_alumno = genera_alumno
+        else:
+            obj.genera_alumno = False
+
+
         obj.save()
         return redirect('cargarcontenido.index')
 
