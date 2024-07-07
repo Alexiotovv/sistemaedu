@@ -100,7 +100,10 @@ Despliegue:
          localhost:8000/login_estudiante
 17. url para superusuario:
        localhost:8000/admin
-
+18. Crear Grupos de usuarios y agregar usuarios a los grupos en el django admin:
+    Grupos: Admin y Estudiante
+    También puedes usar la opción de gestión de usuarios.
+    
 Notas Importantes:
    Para correr el servidor e instalar todas las dependencias, debe estar activado el entorno virtual.
    Los vídeos cargados no deben superar los 4 minutos, por motivos de recursos de hardware, si se desea subir videos más grandes se debe ajustar los parámetros del modelo usado.
