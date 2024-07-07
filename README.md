@@ -1,11 +1,13 @@
 Sistemaedu
 
-Es un Sistema hecho en python-django, que permite subir videos para extraer el audio y el texto. asu vez utiliza AI para resumir el texto extraido.
+Es un Sistema hecho en python-django, para propósitos educativo, que permite subir videos para extraer el audio y el texto. a su vez utiliza AI para resumir el texto extraido.
 la AI utiliza transformer que engloba un conjunto de herramientas como pytorch, tensorflow y JAX, entre otros.
 
 Tecnologías Usada:
-python3.10
-django5.0.6
+lenguaje de programación   : python3.10
+framework                  : django5.0.6
+base de datos              : mysql8
+modelos preentrenados
 
 Paquetes:
 Se especifica en el archivo requirements.txt
@@ -69,21 +71,40 @@ Despliegue:
    Esto es porque las dependencias de AI tienen incompatibilidades en diferentes sistemas operativos, al momento de ejecutar el proyecto python te pedirá paquetes adicionales para instalar,
    esto lo harás con "pip install nombre_del_paquete_solicitado_por_python==version"
 
-   6. Terminado de instalar crear tu base de datos en el servidor hosting:
+6. Terminado de instalar crear tu base de datos en el servidor hosting:
       con el nombre de dbsistemaedu(o el que deseas).
-   7. Hasta aquí debes tener instalados las dependencias necesarias
-   8. Te ubicas en la raiz de la carpeta donde se encuentra el archivo manage.py:
-   9. Crear archivo settings.py y copiar el contenido del archivo setting_example.py, colocar el nombre de la base de datos y las credenciales de tu base de datos,
+7. Hasta aquí debes tener instalados las dependencias necesarias
+8. Te ubicas en la raiz de la carpeta donde se encuentra el archivo manage.py:
+9. Crear archivo settings.py y copiar el contenido del archivo setting_example.py, colocar el nombre de la base de datos y las credenciales de tu base de datos,
       y pedir configuraciones adicionales al admin del proyecto:
        
-   11.Crear las tablas en la base de datos ejecutando:
+11.Crear las tablas en la base de datos ejecutando:
      python manage.py makemigrations
      python manage.py migrate
    
-   12. Crear superusuario con el comando:
+12. Crear superusuario con el comando:
       python manage.py createsuperuser
       Te pedirá datos: nombreusuario, correo, contraseña, nuevamente contraseña
-   13. 
+13. Crear procedimiento almacenado en la db:
+   CREATE PROCEDURE spReproducciones()
+   BEGIN
+   	SELECT cv.nombre as 'nombre', sum(cv.reproducciones) as 'reproducciones' from cargarcontenido_video cv
+   		group by cv.nombre;
+   END
+14. Ejecutar el servidor django, con el comando:
+    python manage.py runserver
+16. abrir el proyecto en un navegador en la url:
+       Para administrador:
+         localhost:8000/login
+      Para estudiantes:
+         localhost:8000/login_estudiante
+17. url para superusuario:
+       localhost:8000/admin
+
+Notas Importantes:
+   Para correr el servidor e instalar todas las dependencias, debe estar activado el entorno virtual.
+   Los vídeos cargados no deben superar los 4 minutos, por motivos de recursos de hardware, si se desea subir videos más grandes se debe ajustar los parámetros del modelo usado.
+   Dado la naturaleza del proyecto educativo, el procesamiento de videos más grandes consume más recursos, y toma mucho más tiempo de procesar(extraer textos, resumir con la AI, etc),          pudiendo llevar a errores.
 
 
    
